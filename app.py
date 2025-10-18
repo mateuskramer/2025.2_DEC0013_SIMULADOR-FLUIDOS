@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.insert(0, os.path.dirname(__file__))
+
 import streamlit as st
 from config.settings import configure_page
 from components.styles import apply_custom_styles
