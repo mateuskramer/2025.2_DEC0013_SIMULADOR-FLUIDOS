@@ -379,32 +379,6 @@ def _display_pressure_profile(pipe_results, pipes):
     """Exibe gráfico de perfil de pressão ao longo do sistema"""
     st.markdown("### 📉 Perfil de Pressão ao Longo do Sistema")
     
-    # Explicação do gráfico
-    with st.expander("ℹ️ Como interpretar este gráfico", expanded=False):
-        st.markdown("""
-        **O que este gráfico mostra:**
-        
-        Este gráfico representa a **linha de gradiente hidráulico (LGH)** do sistema, mostrando como a 
-        pressão varia ao longo da tubulação desde a entrada até a saída[web:2].
-        
-        **Como interpretar:**
-        
-        - **Eixo X (horizontal)**: Posição ao longo do sistema em metros
-        - **Eixo Y (vertical)**: Pressão em kPa em cada ponto
-        - **Inclinação da curva**: Quanto mais inclinada (descendente), maior a perda de pressão naquele trecho[web:2]
-        - **Quedas bruscas**: Indicam perdas localizadas significativas (válvulas, curvas, mudanças de diâmetro)
-        - **Inclinação suave**: Indica perda distribuída por atrito ao longo do tubo[web:6]
-        
-        **Pontos de atenção:**
-        
-        - ⚠️ **Pressão final muito baixa**: Pode causar problemas no equipamento de saída
-        - ⚠️ **Quedas muito acentuadas**: Indicam trechos com excesso de acessórios ou diâmetro inadequado
-        - ✅ **Ideal**: Curva descendente suave e uniforme, sem quedas bruscas
-        
-        *Na prática, se você instalasse tubos verticais (piezômetros) ao longo da tubulação, 
-        a água subiria até as alturas mostradas neste gráfico.*[web:2]
-        """)
-    
     positions = [0]
     pressures = [pipe_results[0]['P_in']/1000]  # kPa
     
@@ -451,12 +425,61 @@ def _display_pressure_profile(pipe_results, pipes):
     
     st.plotly_chart(fig_pressure, use_container_width=True)
 
+    # Explicação do gráfico
+    with st.expander("ℹ️ Como interpretar este gráfico", expanded=False):
+        st.markdown("""
+        **O que este gráfico mostra:**
+        
+        Este gráfico representa a **linha de gradiente hidráulico (LGH)** do sistema, mostrando como a 
+        pressão varia ao longo da tubulação desde a entrada até a saída.
+        
+        **Como interpretar:**
+        
+        - **Eixo X (horizontal)**: Posição ao longo do sistema em metros
+        - **Eixo Y (vertical)**: Pressão em kPa em cada ponto
+        - **Inclinação da curva**: Quanto mais inclinada (descendente), maior a perda de pressão naquele trecho[web:2]
+        - **Quedas bruscas**: Indicam perdas localizadas significativas (válvulas, curvas, mudanças de diâmetro)
+        - **Inclinação suave**: Indica perda distribuída por atrito ao longo do tubo[web:6]
+        
+        **Pontos de atenção:**
+        
+        - ⚠️ **Pressão final muito baixa**: Pode causar problemas no equipamento de saída
+        - ⚠️ **Quedas muito acentuadas**: Indicam trechos com excesso de acessórios ou diâmetro inadequado
+        - ✅ **Ideal**: Curva descendente suave e uniforme, sem quedas bruscas
+        
+        *Na prática, se você instalasse tubos verticais (piezômetros) ao longo da tubulação, 
+        a água subiria até as alturas mostradas neste gráfico.*
+        """)
+
 
 
 def _display_losses_by_section(pipe_results):
     """Exibe gráfico de perdas por trecho"""
     st.markdown("### 📊 Perdas por Trecho")
     
+    fig_losses = go.Figure()
+    
+    trechos = [f"Trecho {r['id']}" for r in pipe_results]
+    h_dist = [r['h_distributed'] for r in pipe_results]
+    h_loc = [r['h_local'] for r in pipe_results]
+    h_elev = [r['h_elevation'] for r in pipe_results]
+    
+    fig_losses.add_trace(go.Bar(name='Distribuída', x=trechos, y=h_dist, marker_color='#00d4ff'))
+    fig_losses.add_trace(go.Bar(name='Localizada', x=trechos, y=h_loc, marker_color='#4ecdc4'))
+    fig_losses.add_trace(go.Bar(name='Elevação', x=trechos, y=h_elev, marker_color='#ffd60a'))
+    
+    fig_losses.update_layout(
+        barmode='stack',
+        xaxis_title="Trechos",
+        yaxis_title="Perda de Carga (m)",
+        paper_bgcolor='#1f3044',
+        plot_bgcolor='#2d4059',
+        font=dict(color='#e0fbfc'),
+        legend=dict(bgcolor='#2d4059', bordercolor='#3d5a73', borderwidth=1)
+    )
+    
+    st.plotly_chart(fig_losses, use_container_width=True)
+
     # Explicação do gráfico
     with st.expander("ℹ️ Como interpretar este gráfico", expanded=False):
         st.markdown("""
@@ -491,26 +514,3 @@ def _display_losses_by_section(pipe_results):
         
         *A perda total em cada trecho é a soma das três componentes (altura das barras empilhadas).*
         """)
-    
-    fig_losses = go.Figure()
-    
-    trechos = [f"Trecho {r['id']}" for r in pipe_results]
-    h_dist = [r['h_distributed'] for r in pipe_results]
-    h_loc = [r['h_local'] for r in pipe_results]
-    h_elev = [r['h_elevation'] for r in pipe_results]
-    
-    fig_losses.add_trace(go.Bar(name='Distribuída', x=trechos, y=h_dist, marker_color='#00d4ff'))
-    fig_losses.add_trace(go.Bar(name='Localizada', x=trechos, y=h_loc, marker_color='#4ecdc4'))
-    fig_losses.add_trace(go.Bar(name='Elevação', x=trechos, y=h_elev, marker_color='#ffd60a'))
-    
-    fig_losses.update_layout(
-        barmode='stack',
-        xaxis_title="Trechos",
-        yaxis_title="Perda de Carga (m)",
-        paper_bgcolor='#1f3044',
-        plot_bgcolor='#2d4059',
-        font=dict(color='#e0fbfc'),
-        legend=dict(bgcolor='#2d4059', bordercolor='#3d5a73', borderwidth=1)
-    )
-    
-    st.plotly_chart(fig_losses, use_container_width=True)
