@@ -379,6 +379,32 @@ def _display_pressure_profile(pipe_results, pipes):
     """Exibe gráfico de perfil de pressão ao longo do sistema"""
     st.markdown("### 📉 Perfil de Pressão ao Longo do Sistema")
     
+    # Explicação do gráfico
+    with st.expander("ℹ️ Como interpretar este gráfico", expanded=False):
+        st.markdown("""
+        **O que este gráfico mostra:**
+        
+        Este gráfico representa a **linha de gradiente hidráulico (LGH)** do sistema, mostrando como a 
+        pressão varia ao longo da tubulação desde a entrada até a saída[web:2].
+        
+        **Como interpretar:**
+        
+        - **Eixo X (horizontal)**: Posição ao longo do sistema em metros
+        - **Eixo Y (vertical)**: Pressão em kPa em cada ponto
+        - **Inclinação da curva**: Quanto mais inclinada (descendente), maior a perda de pressão naquele trecho[web:2]
+        - **Quedas bruscas**: Indicam perdas localizadas significativas (válvulas, curvas, mudanças de diâmetro)
+        - **Inclinação suave**: Indica perda distribuída por atrito ao longo do tubo[web:6]
+        
+        **Pontos de atenção:**
+        
+        - ⚠️ **Pressão final muito baixa**: Pode causar problemas no equipamento de saída
+        - ⚠️ **Quedas muito acentuadas**: Indicam trechos com excesso de acessórios ou diâmetro inadequado
+        - ✅ **Ideal**: Curva descendente suave e uniforme, sem quedas bruscas
+        
+        *Na prática, se você instalasse tubos verticais (piezômetros) ao longo da tubulação, 
+        a água subiria até as alturas mostradas neste gráfico.*[web:2]
+        """)
+    
     positions = [0]
     pressures = [pipe_results[0]['P_in']/1000]  # kPa
     
@@ -426,9 +452,45 @@ def _display_pressure_profile(pipe_results, pipes):
     st.plotly_chart(fig_pressure, use_container_width=True)
 
 
+
 def _display_losses_by_section(pipe_results):
     """Exibe gráfico de perdas por trecho"""
     st.markdown("### 📊 Perdas por Trecho")
+    
+    # Explicação do gráfico
+    with st.expander("ℹ️ Como interpretar este gráfico", expanded=False):
+        st.markdown("""
+        **O que este gráfico mostra:**
+        
+        Este gráfico de barras empilhadas decompõe as perdas de carga em cada trecho do sistema, 
+        permitindo identificar onde ocorrem as maiores dissipações de energia[web:6].
+        
+        **Tipos de perda (cores):**
+        
+        - 🔵 **Perda Distribuída (azul)**: Causada pelo **atrito do fluido com as paredes** ao longo 
+          de todo o comprimento do tubo. Calculada pela equação de Darcy-Weisbach[web:6]:
+          - Aumenta com: comprimento do tubo, rugosidade da parede, velocidade do fluido
+          - Diminui com: maior diâmetro do tubo
+        
+        - 🟢 **Perda Localizada (verde)**: Causada pela **turbulência em acessórios** como válvulas, 
+          curvas, expansões e contrações[web:2]:
+          - Cada acessório tem um coeficiente K característico
+          - Proporcionais ao quadrado da velocidade (V²/2g)
+          - Não dependem do comprimento do tubo
+        
+        - 🟡 **Perda/Ganho por Elevação (amarelo)**: Causada pela **diferença de altura** (efeito gravitacional):
+          - Positivo: tubo subindo (perde pressão)
+          - Negativo: tubo descendo (ganha pressão)
+          - Calculado como: ρ·g·Δz
+        
+        **Como usar para otimização:**
+        
+        - Se a **perda distribuída** domina: considere aumentar o diâmetro ou reduzir o comprimento
+        - Se a **perda localizada** domina: reduza o número de acessórios ou use válvulas com menor K[web:2]
+        - Identifique **gargalos**: trechos com perdas desproporcionalmente altas em relação aos demais
+        
+        *A perda total em cada trecho é a soma das três componentes (altura das barras empilhadas).*
+        """)
     
     fig_losses = go.Figure()
     
