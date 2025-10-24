@@ -439,7 +439,7 @@ def _display_pressure_profile(pipe_results, pipes):
         - **Eixo Y (vertical)**: Pressão em kPa em cada ponto
         - **Inclinação da curva**: Quanto mais inclinada (descendente), maior a perda de pressão naquele trecho[web:2]
         - **Quedas bruscas**: Indicam perdas localizadas significativas (válvulas, curvas, mudanças de diâmetro)
-        - **Inclinação suave**: Indica perda distribuída por atrito ao longo do tubo[web:6]
+        - **Inclinação suave**: Indica perda distribuída por atrito ao longo do tubo
         
         **Pontos de atenção:**
         
@@ -486,7 +486,7 @@ def _display_losses_by_section(pipe_results):
         **O que este gráfico mostra:**
         
         Este gráfico de barras empilhadas decompõe as perdas de carga em cada trecho do sistema, 
-        permitindo identificar onde ocorrem as maiores dissipações de energia[web:6].
+        permitindo identificar onde ocorrem as maiores dissipações de energia.
         
         **Tipos de perda (cores):**
         
@@ -509,7 +509,7 @@ def _display_losses_by_section(pipe_results):
         **Como usar para otimização:**
         
         - Se a **perda distribuída** domina: considere aumentar o diâmetro ou reduzir o comprimento
-        - Se a **perda localizada** domina: reduza o número de acessórios ou use válvulas com menor K[web:2]
+        - Se a **perda localizada** domina: reduza o número de acessórios ou use válvulas com menor K
         - Identifique **gargalos**: trechos com perdas desproporcionalmente altas em relação aos demais
         
         *A perda total em cada trecho é a soma das três componentes (altura das barras empilhadas).*
