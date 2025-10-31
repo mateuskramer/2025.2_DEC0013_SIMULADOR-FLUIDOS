@@ -267,6 +267,7 @@ def render_pipe_system_tab(sidebar_data):
             </div>
         </div>
         """, unsafe_allow_html=True)
+   
     st.markdown("""
     **Legenda das Variáveis:**
     - **P₁, P₂**: Pressões nos pontos 1 e 2 (Pa)
