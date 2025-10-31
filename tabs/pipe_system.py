@@ -166,46 +166,47 @@ def render_pipe_system_tab(sidebar_data):
                 2. O arquivo `principio-bernoulli.webp` está dentro de `assets/`
                 """)
                 
-        except Exception as e:
-            st.error(f"""
-            **Erro ao tentar carregar a imagem:**
-            
-            {type(e).__name__}: {str(e)}
-            """)
-            
-            # Mostra o diagrama alternativo em texto
-            st.markdown("""
-            <div class="bernoulli-container">
-                <h3 style="color: #00d4ff; margin-bottom: 1rem;">Princípio de Bernoulli - Conservação de Energia em Escoamentos</h3>
+            except Exception as e:
+                st.error(f"""
+                **Erro ao tentar carregar a imagem:**
                 
-                <div class="bernoulli-diagram">
-                    <div style="margin-bottom: 1rem;">
-                        <strong style="color: #00d4ff;">Ponto 1 → Ponto 2</strong>
-                    </div>
-                    <div style="background: #2d4059; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
-                        <div>┌─────────────────────────────────────────────────────────┐</div>
-                        <div>│  P₁, V₁, h₁, A₁                  P₂, V₂, h₂, A₂       │</div>
-                        <div>│  ●─────────→ FLUIDO →─────────→ ●                     │</div>
-                        <div>└─────────────────────────────────────────────────────────┘</div>
+                {type(e).__name__}: {str(e)}
+                """)
+                
+                # Mostra o diagrama alternativo em texto
+                st.markdown("""
+                <div class="bernoulli-container">
+                    <h3 style="color: #00d4ff; margin-bottom: 1rem;">Princípio de Bernoulli - Conservação de Energia em Escoamentos</h3>
+                    
+                    <div class="bernoulli-diagram">
+                        <div style="margin-bottom: 1rem;">
+                            <strong style="color: #00d4ff;">Ponto 1 → Ponto 2</strong>
+                        </div>
+                        <div style="background: #2d4059; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                            <div>┌─────────────────────────────────────────────────────────┐</div>
+                            <div>│  P₁, V₁, h₁, A₁                  P₂, V₂, h₂, A₂       │</div>
+                            <div>│  ●─────────→ FLUIDO →─────────→ ●                     │</div>
+                            <div>└─────────────────────────────────────────────────────────┘</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            """, unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
        
+            st.markdown("""
+            **Legenda das Variáveis:**
+            - **P₁, P₂**: Pressões nos pontos 1 e 2 (Pa)
+            - **V₁, V₂**: Velocidades nos pontos 1 e 2 (m/s)
+            - **h₁, h₂**: Alturas (cota) dos pontos 1 e 2 (m)
+            - **A₁, A₂**: Áreas das seções transversais 1 e 2 (m²)
+            - **Q**: Vazão volumétrica (m³/s)
+            - **ρ**: Densidade do fluido (kg/m³)
+            - **g**: Aceleração da gravidade (9.81 m/s²)
+            
+            **Equação de Bernoulli Estendida:**
+            """)
+            st.latex(r"\frac{P_1}{\rho g} + \frac{V_1^2}{2g} + z_1 = \frac{P_2}{\rho g} + \frac{V_2^2}{2g} + z_2 + h_L")
+
         st.markdown("""
-        **Legenda das Variáveis:**
-        - **P₁, P₂**: Pressões nos pontos 1 e 2 (Pa)
-        - **V₁, V₂**: Velocidades nos pontos 1 e 2 (m/s)
-        - **h₁, h₂**: Alturas (cota) dos pontos 1 e 2 (m)
-        - **A₁, A₂**: Áreas das seções transversais 1 e 2 (m²)
-        - **Q**: Vazão volumétrica (m³/s)
-        - **ρ**: Densidade do fluido (kg/m³)
-        - **g**: Aceleração da gravidade (9.81 m/s²)
-        
-        **Equação de Bernoulli Estendida:**
-        """)
-        st.latex(r"\frac{P_1}{\rho g} + \frac{V_1^2}{2g} + z_1 = \frac{P_2}{\rho g} + \frac{V_2^2}{2g} + z_2 + h_L")
-        
         Baseado no **Princípio da Conservação de Energia** (Equação de Bernoulli Estendida):
         """)
         st.latex(r"\frac{P_1}{\rho g} + \frac{V_1^2}{2g} + z_1 = \frac{P_2}{\rho g} + \frac{V_2^2}{2g} + z_2 + h_L")
