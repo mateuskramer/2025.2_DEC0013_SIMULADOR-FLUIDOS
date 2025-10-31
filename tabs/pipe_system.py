@@ -267,6 +267,20 @@ def render_pipe_system_tab(sidebar_data):
             </div>
         </div>
         """, unsafe_allow_html=True)
+    st.markdown("""
+    **Legenda das Variáveis:**
+    - **P₁, P₂**: Pressões nos pontos 1 e 2 (Pa)
+    - **V₁, V₂**: Velocidades nos pontos 1 e 2 (m/s)
+    - **h₁, h₂**: Alturas (cota) dos pontos 1 e 2 (m)
+    - **A₁, A₂**: Áreas das seções transversais 1 e 2 (m²)
+    - **Q**: Vazão volumétrica (m³/s)
+    - **ρ**: Densidade do fluido (kg/m³)
+    - **g**: Aceleração da gravidade (9.81 m/s²)
+    
+    **Equação de Bernoulli Estendida:**
+    """)
+    st.latex(r"\frac{P_1}{\rho g} + \frac{V_1^2}{2g} + z_1 = \frac{P_2}{\rho g} + \frac{V_2^2}{2g} + z_2 + h_L")
+    
     
     st.markdown("---")
     st.markdown('<div class="section-title">📊 Resultados do Sistema</div>', unsafe_allow_html=True)
