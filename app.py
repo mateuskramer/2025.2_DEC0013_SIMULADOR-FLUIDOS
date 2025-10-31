@@ -1,13 +1,8 @@
-import sys
-import os
-sys.path.insert(0, os.path.dirname(__file__))
-
 import streamlit as st
 from config.settings import configure_page
 from components.styles import apply_custom_styles
 from components.sidebar import create_sidebar
 from tabs.pipe_system import render_pipe_system_tab
-from tabs.open_channels import render_open_channels_tab
 from tabs.simulations import render_simulations_tab
 from tabs.about import render_about_tab
 
@@ -47,19 +42,17 @@ if 'pipes' not in st.session_state:
 sidebar_data = create_sidebar()
 
 # Layout principal com abas
-tab1, tab2, tab3, tab4 = st.tabs(["📊 Sistema de Tubos", "🌊 Canais Abertos", "📈 Simulações", "ℹ️ Sobre"])
+tab1, tab2, tab3 = st.tabs(["📊 Sistema de Tubos",  "📈 Simulações", "ℹ️ Sobre"])
 
 with tab1:
     render_pipe_system_tab(sidebar_data)
 
 with tab2:
-    render_open_channels_tab()
-
-with tab3:
     render_simulations_tab(sidebar_data)
 
-with tab4:
+with tab3:
     render_about_tab()
+
 
 # Rodapé
 st.markdown("---")
