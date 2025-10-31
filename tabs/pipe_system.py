@@ -143,10 +143,7 @@ def render_pipe_system_tab(sidebar_data):
         # Passo 6
         st.markdown("""
         ---
-        #### **Passo 6: Variação de Pressão** 📊 
-
-
-
+        #### **Passo 6: Variação de Pressão** 📊
         
         Baseado no **Princípio da Conservação de Energia** (Equação de Bernoulli Estendida):
         """)
@@ -223,27 +220,28 @@ def render_pipe_system_tab(sidebar_data):
     
     # Imagem do Princípio de Bernoulli
     st.markdown('<div class="section-title">📐 Diagrama do Princípio de Bernoulli</div>', unsafe_allow_html=True)
+    
     try:
         # Caminho da imagem: sobe um nível de tabs/ para project/, depois entra em assets/
         project_root = Path(__file__).parent.parent
         image_path = project_root / "assets" / "principio-bernoulli.webp"
-    
-    
-    if image_path.exists():
-        st.image(str(image_path), 
-                caption="Princípio de Bernoulli - Conservação de Energia em Escoamentos", 
-                width=400)
-    else:
-        st.error(f"""
-        **Arquivo de imagem não encontrado!**
         
-        Procurei em: `{image_path}`
         
-        Certifique-se de que:
-        1. A pasta `assets/` existe na raiz do projeto
-        2. O arquivo `principio-bernoulli.webp` está dentro de `assets/`
-        """)
-        
+        if image_path.exists():
+            st.image(str(image_path), 
+                    caption="Princípio de Bernoulli - Conservação de Energia em Escoamentos", 
+                    width=400)
+        else:
+            st.error(f"""
+            **Arquivo de imagem não encontrado!**
+            
+            Procurei em: `{image_path}`
+            
+            Certifique-se de que:
+            1. A pasta `assets/` existe na raiz do projeto
+            2. O arquivo `principio-bernoulli.webp` está dentro de `assets/`
+            """)
+            
     except Exception as e:
         st.error(f"""
         **Erro ao tentar carregar a imagem:**
@@ -269,21 +267,6 @@ def render_pipe_system_tab(sidebar_data):
             </div>
         </div>
         """, unsafe_allow_html=True)
-
-    st.markdown("""
-    **Legenda das Variáveis:**
-    - **P₁, P₂**: Pressões nos pontos 1 e 2 (Pa)
-    - **V₁, V₂**: Velocidades nos pontos 1 e 2 (m/s)
-    - **h₁, h₂**: Alturas (cota) dos pontos 1 e 2 (m)
-    - **A₁, A₂**: Áreas das seções transversais 1 e 2 (m²)
-    - **Q**: Vazão volumétrica (m³/s)
-    - **ρ**: Densidade do fluido (kg/m³)
-    - **g**: Aceleração da gravidade (9.81 m/s²)
-    
-    **Equação de Bernoulli Estendida:**
-    """)
-    st.latex(r"\frac{P_1}{\rho g} + \frac{V_1^2}{2g} + z_1 = \frac{P_2}{\rho g} + \frac{V_2^2}{2g} + z_2 + h_L")
-    
     
     st.markdown("---")
     st.markdown('<div class="section-title">📊 Resultados do Sistema</div>', unsafe_allow_html=True)
